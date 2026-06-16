@@ -245,7 +245,7 @@
 
     <script>
         const MONETIZATION_CONFIG = {
-            maxFreeCalculations: 5, 
+            maxFreeCalculations: 5, // Ліміт безкоштовних сесій
             salt: "FUEL_SECRET_SALT_2025" 
         };
 
@@ -291,15 +291,17 @@
             return parseInt(localStorage.getItem('fuel_calc_usage_count') || '0', 10);
         }
 
-        function incrementUsage() {
+        // Обліковуємо лише ОДНЕ зняття спроби при новому запуску/вкладці
+        function recordSessionUsage() {
             if (isUnlocked()) return;
             
-            let count = getCalculationsCount();
-            count++;
-            localStorage.setItem('fuel_calc_usage_count', count.toString());
-            
-            updateUIState();
-            checkAccess();
+            const sessionRegistered = sessionStorage.getItem('fuel_calc_session_registered');
+            if (!sessionRegistered) {
+                let count = getCalculationsCount();
+                count++;
+                localStorage.setItem('fuel_calc_usage_count', count.toString());
+                sessionStorage.setItem('fuel_calc_session_registered', 'true');
+            }
         }
 
         function checkAccess() {
@@ -311,7 +313,8 @@
             }
 
             const count = getCalculationsCount();
-            if (count >= MONETIZATION_CONFIG.maxFreeCalculations) {
+            // Блокуємо доступ тільки якщо кількість сесій стала більшою за ліміт
+            if (count > MONETIZATION_CONFIG.maxFreeCalculations) {
                 document.getElementById('paywall-lock-screen').classList.remove('hidden');
                 document.getElementById('result').classList.add('hidden');
                 document.getElementById('formula-card').classList.add('hidden');
@@ -345,17 +348,16 @@
                 document.getElementById('active-key-display').textContent = localStorage.getItem('fuel_calc_active_key') || generateValidKey(devId);
             } else {
                 const count = getCalculationsCount();
-                const remaining = Math.max(0, MONETIZATION_CONFIG.maxFreeCalculations - count);
                 
                 document.getElementById('activation-pending-ui').classList.remove('hidden');
                 document.getElementById('activation-success-ui').classList.add('hidden');
 
-                if (remaining > 0) {
+                if (count <= MONETIZATION_CONFIG.maxFreeCalculations) {
                     badge.className = "inline-block bg-blue-100 text-blue-800 text-sm font-semibold px-4 py-1.5 rounded-full";
-                    badge.innerHTML = `Пробний режим: залишилося безкоштовних змін параметрів: ${remaining} з ${MONETIZATION_CONFIG.maxFreeCalculations}`;
+                    badge.innerHTML = `Пробний режим: сесія ${count} з ${MONETIZATION_CONFIG.maxFreeCalculations}`;
                 } else {
                     badge.className = "inline-block bg-rose-100 text-rose-800 text-sm font-semibold px-4 py-1.5 rounded-full";
-                    badge.innerHTML = "🚫 Безкоштовний ліміт вичерпано. Потрібна активація.";
+                    badge.innerHTML = "🚫 Безкоштовний ліміт сесій вичерпано. Потрібна активація.";
                 }
             }
         }
@@ -581,18 +583,18 @@
         }
 
         window.onload = () => {
+            recordSessionUsage(); // Списує 1 сесію при завантаженні (якщо це нова сесія)
             updateUIState();
             checkAccess();
 
             document.querySelectorAll('input').forEach(el => {
+                // Тільки рахуємо паливо при будь-яких змінах, БЕЗ списування ліміту
                 el.addEventListener('input', () => {
                     if (checkAccess()) {
                         calculateFuel();
                     }
                 });
-                
                 el.addEventListener('change', () => {
-                    incrementUsage();
                     if (checkAccess()) {
                         calculateFuel();
                     }
