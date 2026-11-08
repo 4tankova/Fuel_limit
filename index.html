@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#0f766e">
 <title>Розрахунок витрати палива</title>
 <script>
+// Тему ставимо до відмальовки сторінки — без "спалаху" світлої теми
 (function(){try{var t=localStorage.getItem('fuel_calc_theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,6 +47,7 @@ button{cursor:pointer}
 a{color:inherit}
 .container{max-width:1240px;margin:0 auto;padding:clamp(14px,3vw,28px) clamp(12px,3vw,24px) 48px}
 
+/* ---------- Шапка ---------- */
 .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:var(--gap)}
 .brand{display:flex;align-items:center;gap:14px;min-width:0}
 .logo{width:50px;height:50px;flex-shrink:0;border-radius:16px;display:grid;place-items:center;font-size:24px;
@@ -72,6 +74,7 @@ a.pill:hover,button.pill:hover{transform:translateY(-1px);box-shadow:var(--shado
 }
 @media(min-width:561px){.pill .lbl-short{display:none}}
 
+/* ---------- Сітка сторінки ---------- */
 .layout{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap);align-items:start}
 @media(min-width:1080px){.layout{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}.side{position:sticky;top:16px}}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);padding:clamp(16px,3vw,28px);min-width:0}
@@ -83,6 +86,7 @@ a.pill:hover,button.pill:hover{transform:translateY(-1px);box-shadow:var(--shado
 .section-title{flex-wrap:wrap;row-gap:2px}
 @media(max-width:560px){.tip{display:none}}
 
+/* ---------- Поля ---------- */
 .grid2{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
 @media(min-width:520px){.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .field{display:block;min-width:0}
@@ -97,6 +101,7 @@ a.pill:hover,button.pill:hover{transform:translateY(-1px);box-shadow:var(--shado
 .eq{flex-shrink:0;margin-right:8px;font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-soft);padding:3px 7px;border-radius:8px;white-space:nowrap}
 .hint{font-size:12px;color:var(--muted);margin-top:6px;min-height:17px}
 
+/* ---------- Авто ---------- */
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
 .chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:var(--surface-2);border-radius:999px;
   padding:5px 5px 5px 12px;font-size:13px;font-weight:600;transition:all .15s;cursor:pointer;max-width:100%}
@@ -112,6 +117,22 @@ a.pill:hover,button.pill:hover{transform:translateY(-1px);box-shadow:var(--shado
 .veh-form input{flex:1;min-width:0;border:1.5px solid var(--border);background:var(--surface-2);border-radius:12px;padding:10px 12px;outline:none}
 .veh-form input:focus{border-color:var(--primary)}
 
+/* ---------- Сегментні перемикачі ---------- */
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:3px;gap:2px;flex-shrink:0}
+.seg label{position:relative;display:block}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{display:block;padding:4px 11px;border-radius:999px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+.seg label:hover span{color:var(--text)}
+.seg input:checked+span{background:var(--c,var(--primary));color:#fff}
+.seg input:focus-visible+span{outline:2px solid var(--primary);outline-offset:1px}
+.fuel-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;padding:10px 12px 10px 16px;border:1px solid var(--border);border-radius:16px;background:var(--surface-2)}
+.fuel-row .label{margin:0}
+.fuel-row .seg{--c:var(--primary)}
+.fuel-row .seg span{font-size:13px;padding:7px 14px}
+.fuel-row .seg small{font-weight:600;opacity:.75;margin-left:4px}
+@media(max-width:420px){.fuel-row{flex-direction:column;align-items:stretch}.fuel-row .seg{display:grid;grid-template-columns:1fr 1fr}.fuel-row .seg span{text-align:center}}
+
+/* ---------- Дороги ---------- */
 .roads{display:flex;flex-direction:column;gap:12px}
 .road{border-radius:18px;padding:14px 14px 14px 20px;border:1px solid var(--border);background:var(--surface-2);position:relative;overflow:hidden}
 .road::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c)}
@@ -125,6 +146,7 @@ a.pill:hover,button.pill:hover{transform:translateY(-1px);box-shadow:var(--shado
 .road-city{--c:var(--amber);--cs:var(--amber-soft)}
 .road-low{--c:var(--rose);--cs:var(--rose-soft)}
 
+/* ---------- Перемикачі ---------- */
 .switch{display:flex;align-items:center;gap:14px;cursor:pointer;padding:14px 16px;border:1px solid var(--border);border-radius:16px;background:var(--surface-2);height:100%;min-width:0}
 .switch input{appearance:none;-webkit-appearance:none;width:46px;height:28px;border-radius:999px;background:var(--border-strong);position:relative;flex-shrink:0;transition:background .2s;cursor:pointer;margin:0}
 .switch input::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
@@ -137,6 +159,7 @@ a.pill:hover,button.pill:hover{transform:translateY(-1px);box-shadow:var(--shado
 .balance-line b{white-space:nowrap;font-size:18px;font-variant-numeric:tabular-nums}
 .balance-line.neg{background:var(--rose-soft);border-color:transparent;color:var(--rose)}
 
+/* ---------- Кнопки ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;padding:11px 16px;font-weight:600;font-size:14px;
   border:1px solid var(--border);background:var(--surface);transition:all .15s;text-decoration:none;line-height:1.2}
 .btn:hover{border-color:var(--primary);transform:translateY(-1px)}
@@ -149,6 +172,7 @@ a.pill:hover,button.pill:hover{transform:translateY(-1px);box-shadow:var(--shado
 .tip{font-size:12px;color:var(--muted);align-self:center}
 .tip kbd{font-family:inherit;font-weight:700;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:1px 6px}
 
+/* ---------- Результат ---------- */
 .result{border-radius:var(--r);padding:clamp(18px,3vw,26px);color:#fff;position:relative;overflow:hidden;
   background:radial-gradient(500px 220px at 100% 0%,rgba(52,211,153,.35),transparent 60%),linear-gradient(145deg,#064e3b,#047857 55%,#059669);
   box-shadow:var(--shadow-lg)}
@@ -175,10 +199,12 @@ a.pill:hover,button.pill:hover{transform:translateY(-1px);box-shadow:var(--shado
 .result-actions .btn{flex-direction:column;gap:4px;padding:11px 4px;font-size:12px}
 .result-actions .btn span:first-child{font-size:18px}
 
+/* ---------- Блокування ---------- */
 .lock{text-align:center;border-radius:var(--r);padding:30px 22px;background:linear-gradient(160deg,#0f172a,#1e1b2e);color:#fff;border:1px solid rgba(244,63,94,.35);box-shadow:var(--shadow-lg)}
 .lock h2{color:#fb7185;margin:8px 0 6px;font-size:21px}
 .lock p{color:#cbd5e1;font-size:14px;margin:0 0 18px}
 
+/* ---------- Згортні картки ---------- */
 details.card{padding:0}
 details.card>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;padding:16px clamp(16px,3vw,24px);border-radius:var(--r)}
 details.card>summary::-webkit-details-marker{display:none}
@@ -188,6 +214,7 @@ details[open].card>summary .chev{transform:rotate(180deg)}
 details.card>.d-body{padding:0 clamp(16px,3vw,24px) clamp(16px,3vw,24px)}
 .state{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap}
 
+/* ---------- Деталізація ---------- */
 .formula{display:flex;flex-direction:column;gap:8px;font-size:14px}
 .f-group{font-weight:700;font-size:13px;margin-top:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
 .f-box{border-radius:12px;padding:10px 14px;border:1px solid var(--border);background:var(--surface-2)}
@@ -202,6 +229,7 @@ details.card>.d-body{padding:0 clamp(16px,3vw,24px) clamp(16px,3vw,24px)}
 .f-total span:last-child{color:var(--green)}
 .f-blue{color:var(--primary);font-weight:600}
 
+/* ---------- Історія ---------- */
 .hsum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px}
 .hsum div{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:8px 10px;min-width:0}
 .hsum small{display:block;font-size:11px;color:var(--muted);font-weight:600}
@@ -219,6 +247,7 @@ details.card>.d-body{padding:0 clamp(16px,3vw,24px) clamp(16px,3vw,24px)}
 .empty{color:var(--muted);font-size:14px;text-align:center;padding:14px;border:1px dashed var(--border);border-radius:14px}
 .h-tools{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 
+/* ---------- Активація ---------- */
 .step{margin-bottom:18px}
 .step-k{font-size:11px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:8px}
 .pay{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -234,6 +263,7 @@ details.card>.d-body{padding:0 clamp(16px,3vw,24px) clamp(16px,3vw,24px)}
 
 .hidden{display:none!important}
 
+/* ---------- Мобільна панель результату ---------- */
 .mbar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:40;display:flex;align-items:center;justify-content:space-between;gap:12px;
   padding:10px 16px;border-radius:18px;color:#fff;background:linear-gradient(135deg,#065f46,#059669);box-shadow:0 12px 30px rgba(5,80,60,.45);
   border:0;text-align:left;transform:translateY(160%);transition:transform .25s ease}
@@ -243,6 +273,7 @@ details.card>.d-body{padding:0 clamp(16px,3vw,24px) clamp(16px,3vw,24px)}
 .mbar .mb-side{text-align:right;font-size:13px;color:#d1fae5;font-variant-numeric:tabular-nums}
 @media(min-width:1080px){.mbar{display:none}}
 
+/* ---------- Сповіщення ---------- */
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:#0f172a;color:#fff;padding:12px 18px;border-radius:14px;
   font-size:14px;font-weight:600;box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:all .25s;z-index:60;max-width:calc(100% - 32px);text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
@@ -251,6 +282,7 @@ details.card>.d-body{padding:0 clamp(16px,3vw,24px) clamp(16px,3vw,24px)}
 footer{text-align:center;color:var(--faint);font-size:12px;margin-top:26px}
 @media(max-width:1079px){footer{margin-bottom:70px}}
 
+/* ---------- Друкований звіт ---------- */
 #print-report{display:none}
 @media print{
   @page{size:A4 portrait;margin:12mm 12mm 14mm}
@@ -305,6 +337,7 @@ footer{text-align:center;color:var(--faint);font-size:12px;margin-top:26px}
   </header>
 
   <div class="layout">
+    <!-- ЛІВА КОЛОНКА: ФОРМА -->
     <main class="card form-col">
 
       <div class="section">
@@ -315,6 +348,13 @@ footer{text-align:center;color:var(--faint);font-size:12px;margin-top:26px}
           <button type="button" class="btn btn-sm btn-primary" id="veh-save">Зберегти</button>
           <button type="button" class="btn btn-sm btn-ghost" id="veh-cancel" aria-label="Скасувати">✕</button>
         </div>
+        <div class="fuel-row">
+          <span class="label">Тип пального</span>
+          <div class="seg" role="radiogroup" aria-label="Тип пального">
+            <label><input type="radio" name="fuel_type" value="diesel" checked><span>Дизель<small>+1,3 л/т</small></span></label>
+            <label><input type="radio" name="fuel_type" value="petrol"><span>Бензин<small>+2,0 л/т</small></span></label>
+          </div>
+        </div>
         <div class="grid2">
           <label class="field">
             <span class="label">Базова витрата</span>
@@ -324,7 +364,7 @@ footer{text-align:center;color:var(--faint);font-size:12px;margin-top:26px}
           <label class="field">
             <span class="label">Тоннаж вантажу</span>
             <div class="input-wrap big"><input class="num" id="tons" inputmode="decimal" autocomplete="off" value="0"><span class="unit">т</span></div>
-            <div class="hint">+1,3 л/100 км на кожну тонну</div>
+            <div class="hint" id="tons-hint">+1,3 л/100 км на кожну тонну (дизель)</div>
           </label>
         </div>
       </div>
@@ -340,7 +380,12 @@ footer{text-align:center;color:var(--faint);font-size:12px;margin-top:26px}
             </div>
           </div>
           <div class="road road-city">
-            <div class="road-head"><span class="road-name">Рух в місті</span><span class="badge">+10%</span></div>
+            <div class="road-head"><span class="road-name">Рух в місті</span>
+              <div class="seg" role="radiogroup" aria-label="Надбавка за рух у місті">
+                <label><input type="radio" name="city_pct" value="5"><span>+5%</span></label>
+                <label><input type="radio" name="city_pct" value="10" checked><span>+10%</span></label>
+                <label><input type="radio" name="city_pct" value="15"><span>+15%</span></label>
+              </div></div>
             <div class="grid2">
               <label class="field"><span class="label">З вантажем</span><div class="input-wrap"><input class="num" id="city_load" inputmode="decimal" autocomplete="off" value="0"><span class="unit">км</span></div></label>
               <label class="field"><span class="label">Без вантажу</span><div class="input-wrap"><input class="num" id="city_no" inputmode="decimal" autocomplete="off" value="0"><span class="unit">км</span></div></label>
@@ -403,7 +448,8 @@ footer{text-align:center;color:var(--faint);font-size:12px;margin-top:26px}
       </div>
     </main>
 
-      <aside class="side stack">
+    <!-- ПРАВА КОЛОНКА -->
+    <aside class="side stack">
 
       <div id="paywall-lock-screen" class="lock hidden">
         <div style="font-size:48px">🔒</div>
@@ -520,10 +566,17 @@ const INPUTS_KEY = 'fuel_calc_inputs';
 const HISTORY_KEY = 'fuel_calc_history';
 const VEH_KEY = 'fuel_calc_vehicles';
 const THEME_KEY = 'fuel_calc_theme';
+const FUEL_TYPES = { diesel: { name: 'Дизель', perTon: 1.3 }, petrol: { name: 'Бензин', perTon: 2.0 } };
+const CITY_COEF = { 5: 1.05, 10: 1.10, 15: 1.15 };
+const radioVal = name => (document.querySelector(`input[name="${name}"]:checked`) || {}).value;
+const setRadio = (name, val) => { const el = document.querySelector(`input[name="${name}"][value="${val}"]`); if (el) el.checked = true; };
+const fuelType = () => FUEL_TYPES[radioVal('fuel_type')] ? radioVal('fuel_type') : 'diesel';
+const cityPct = () => CITY_COEF[radioVal('city_pct')] ? +radioVal('city_pct') : 10;
 const MONTHS = ['Січень','Лютий','Березень','Квітень','Травень','Червень','Липень','Серпень','Вересень','Жовтень','Листопад','Грудень'];
 let currentVehicle = '';
 let lastResult = null;
 
+/* ---------- ЛІЦЕНЗУВАННЯ (сумісно з попередніми версіями) ---------- */
 function getDeviceId() {
   let id = LS.get('fuel_calc_device_id');
   if (!id) {
@@ -631,6 +684,7 @@ function performActivation() {
   }
 }
 
+/* ---------- МАТЕМАТИКА (формула без змін) ---------- */
 function excelRound(val, digits = 0) {
   const factor = Math.pow(10, digits);
   return (val >= 0 ? 1 : -1) * Math.round(Math.abs(val) * factor + 1e-10) / factor;
@@ -643,7 +697,9 @@ function lineFuelRaw(distance, rate100, coef) { return (distance * rate100 / 100
 function compute(v) {
   const baseRate = v.base_rate;
   const tons = v.tons;
-  const perTon = 1.3;
+  const perTon = v.perTon ?? 1.3;          // дизель 1,3 / бензин 2,0
+  const cityPct = v.cityPct ?? 10;         // 5 / 10 / 15 %
+  const cityCoef = CITY_COEF[cityPct] ?? 1.10;
   const hours = v.hours;
   const kmPerHour = 25;
 
@@ -652,7 +708,7 @@ function compute(v) {
 
   const roads = [
     { name: "Заміські дороги", coef: 0.85, coefText: "-15%", load: v.zam_load, no: v.zam_no },
-    { name: "Рух в місті", coef: 1.10, coefText: "+10%", load: v.city_load, no: v.city_no },
+    { name: "Рух в місті", coef: cityCoef, coefText: "+" + cityPct + "%", load: v.city_load, no: v.city_no },
     { name: "Рух на понижених передачах", coef: 1.10, coefText: "+10%", load: v.low_load, no: v.low_no }
   ];
 
@@ -697,11 +753,13 @@ function compute(v) {
   const totalKm = round1(totalKmLoad + totalKmNo);
   const actualConsumption = totalKm > 0 ? round1((fuelToWriteOff / totalKm) * 100) : 0;
 
-  return { baseRate, tons, hours, extraLoadRate, loadedRate, loadedLines, emptyLines, totalLoaded, totalEmpty,
+  return { baseRate, tons, hours, perTon, fuelType: v.fuelType || 'diesel', cityPct, extraLoadRate, loadedRate, loadedLines, emptyLines, totalLoaded, totalEmpty,
     hoursKm, hoursFuel, totalRaw, totalRoundedBase, ac: v.ac, acExtra, adblue: v.adblue, adblueExtra,
     fuelToWriteOff, totalKmLoad, totalKmNo, totalKm, actualConsumption };
 }
 
+/* ---------- ВВЕДЕННЯ ---------- */
+// Підтримує одне число або суму рейсів: "12,5+30+8" або "100-20"
 function evalExpr(str) {
   const s = String(str).replace(/\s/g, '').replace(/,/g, '.');
   if (!s) return 0;
@@ -734,6 +792,9 @@ function readInputs() {
   NUM_IDS.forEach(id => v[id] = parseNum($(id).value));
   v.ac = $('ac').checked;
   v.adblue = $('adblue_enabled').checked;
+  v.fuelType = fuelType();
+  v.perTon = FUEL_TYPES[v.fuelType].perTon;
+  v.cityPct = cityPct();
   return v;
 }
 
@@ -744,6 +805,8 @@ function snapshot() {
   s.adblue_enabled = $('adblue_enabled').checked;
   s.note = $('note').value;
   s.vehicle = currentVehicle;
+  s.fuel_type = fuelType();
+  s.city_pct = cityPct();
   return s;
 }
 
@@ -754,6 +817,8 @@ function restore(s) {
   if (s.adblue_enabled !== undefined) $('adblue_enabled').checked = !!s.adblue_enabled;
   $('note').value = s.note || '';
   currentVehicle = s.vehicle || '';
+  setRadio('fuel_type', s.fuel_type || 'diesel');
+  setRadio('city_pct', s.city_pct || 10);
 }
 
 function getBalance(r) {
@@ -762,12 +827,14 @@ function getBalance(r) {
   return { start, added, used: r ? r.fuelToWriteOff : 0, end: round1(start + added - (r ? r.fuelToWriteOff : 0)) };
 }
 
+/* ---------- ВІДОБРАЖЕННЯ ---------- */
 function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
 function buildFormula(r) {
   let h = `
     <div class="f-box">
       <div class="f-row"><span>Базова витрата</span><b>${fmt1(r.baseRate)} л/100 км</b></div>
+      <div class="f-row"><span>Тип пального</span><b>${FUEL_TYPES[r.fuelType].name} (+${fmt1(r.perTon)} л/т)</b></div>
       <div class="f-row"><span>Тоннаж</span><b>${fmt1(r.tons)} т</b></div>
       <div class="f-row"><span>Додатково від вантажу</span><b>${fmt1(r.extraLoadRate)} л</b></div>
       <div class="f-row"><span>Витрата з вантажем</span><b>${fmt1(r.loadedRate)} л/100 км</b></div>
@@ -777,7 +844,7 @@ function buildFormula(r) {
     h += `<div class="f-group">З вантажем</div>`;
     r.loadedLines.forEach(l => {
       h += `<div class="f-box f-green"><div class="t">${l.name}</div>
-        <div class="calc">${fmt1(l.km)} км × (${fmt1(r.baseRate)} + (${fmt1(r.tons)} × 1,3)) / 100 ${l.coefText} = <b>${fmt1(l.fuel)} л</b></div></div>`;
+        <div class="calc">${fmt1(l.km)} км × (${fmt1(r.baseRate)} + (${fmt1(r.tons)} × ${fmt1(r.perTon)})) / 100 ${l.coefText} = <b>${fmt1(l.fuel)} л</b></div></div>`;
     });
     h += `<div class="f-box f-row"><b>Всього з вантажем</b><b>${fmt1(r.totalLoaded)} л</b></div>`;
   }
@@ -840,6 +907,7 @@ function render() {
 
   const r = compute(readInputs());
   lastResult = r;
+  $('tons-hint').textContent = `+${fmt1(r.perTon)} л/100 км на кожну тонну (${FUEL_TYPES[r.fuelType].name.toLowerCase()})`;
   setText('total-fuel', fmtInt(r.fuelToWriteOff), true);
   setText('adblue-top', fmt1(r.adblueExtra) + ' л');
   $('adblue-box').classList.toggle('off', !r.adblue);
@@ -877,7 +945,9 @@ function reportText() {
   if (note) lines.push(`Примітка: ${note}`);
   lines.push('',
     `Базова витрата: ${fmt1(r.baseRate)} л/100 км`,
+    `Пальне: ${FUEL_TYPES[r.fuelType].name} (+${fmt1(r.perTon)} л/100 км на тонну)`,
     `Вантаж: ${fmt1(r.tons)} т (з вантажем ${fmt1(r.loadedRate)} л/100 км)`,
+    `Рух в місті: +${r.cityPct}%`,
     `Пробіг: ${fmt1(r.totalKm)} км (з вантажем ${fmt1(r.totalKmLoad)}, без вантажу ${fmt1(r.totalKmNo)})`);
   if (r.hours > 0) lines.push(`Мотогодини: ${fmt1(r.hours)} м/г (${fmt1(r.hoursFuel)} л)`);
   lines.push(`Кондиціонер: ${r.ac ? fmt1(r.acExtra) + ' л' : 'вимкнено'}`,
@@ -924,6 +994,8 @@ function buildPrintReport() {
       <div><span>Примітка:</span> <b>${esc(note || '____________________')}</b></div>
       <div><span>Базова норма:</span> <b>${fmt1(r.baseRate)} л/100 км</b></div>
       <div><span>Вантаж:</span> <b>${fmt1(r.tons)} т</b> (+${fmt1(r.extraLoadRate)} → ${fmt1(r.loadedRate)} л/100 км)</div>
+      <div><span>Тип пального:</span> <b>${FUEL_TYPES[r.fuelType].name}</b> (+${fmt1(r.perTon)} л/100 км на 1 т)</div>
+      <div><span>Рух в місті:</span> <b>+${r.cityPct}%</b></div>
     </div>
 
     <div class="pr-h">Розрахунок за режимами руху</div>
@@ -1053,10 +1125,10 @@ function exportCsv() {
   const list = LS.json(HISTORY_KEY, []);
   if (!list.length) return;
   const q = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
-  const head = ['Дата','Авто','Примітка','Базова норма, л/100 км','Тоннаж, т','Мотогодини','Пробіг, км','Паливо до списання, л','ADBLUE, л'];
+  const head = ['Дата','Авто','Примітка','Пальне','Місто, %','Базова норма, л/100 км','Тоннаж, т','Мотогодини','Пробіг, км','Паливо до списання, л','ADBLUE, л'];
   const rows = list.map(h => {
     const i = h.inputs || {};
-    return [h.date, h.vehicle || '', h.note || '', i.base_rate || '', i.tons || '', i.hours || '', h.km, h.fuel, h.adblue || ''].map(q).join(';');
+    return [h.date, h.vehicle || '', h.note || '', (FUEL_TYPES[i.fuel_type] || FUEL_TYPES.diesel).name, i.city_pct || 10, i.base_rate || '', i.tons || '', i.hours || '', h.km, h.fuel, h.adblue || ''].map(q).join(';');
   });
   const blob = new Blob(['﻿' + [head.map(q).join(';'), ...rows].join('\r\n')], { type: 'text/csv;charset=utf-8' });
   const a = document.createElement('a');
@@ -1076,8 +1148,8 @@ function renderVehicles() {
   box.innerHTML = '';
   list.forEach((v, idx) => {
     const chip = document.createElement('div');
-    chip.className = 'chip' + (currentVehicle === v.name && base === v.base ? ' active' : '');
-    chip.innerHTML = `<span class="chip-name">${esc(v.name)}</span><span class="chip-rate">${fmt1(v.base)}</span><button type="button" class="x" aria-label="Видалити">×</button>`;
+    chip.className = 'chip' + (currentVehicle === v.name && base === v.base && fuelType() === (v.fuel || 'diesel') ? ' active' : '');
+    chip.innerHTML = `<span class="chip-name">${esc(v.name)}</span><span class="chip-rate">${fmt1(v.base)}${v.fuel === 'petrol' ? ' · бенз.' : ''}</span><button type="button" class="x" aria-label="Видалити">×</button>`;
     chip.addEventListener('click', e => {
       if (e.target.closest('.x')) {
         const l = LS.json(VEH_KEY, []); l.splice(idx, 1); LS.setJson(VEH_KEY, l);
@@ -1087,6 +1159,7 @@ function renderVehicles() {
       }
       $('base_rate').value = String(v.base).replace('.', ',');
       updateEq($('base_rate'));
+      setRadio('fuel_type', v.fuel || 'diesel');
       currentVehicle = v.name;
       render();
     });
@@ -1109,7 +1182,7 @@ function saveVehicle() {
   const base = parseNum($('base_rate').value);
   if (!name) { $('veh-name').focus(); return; }
   const list = LS.json(VEH_KEY, []).filter(v => v.name !== name);
-  list.push({ name, base });
+  list.push({ name, base, fuel: fuelType() });
   LS.setJson(VEH_KEY, list);
   currentVehicle = name;
   $('veh-name').value = '';
@@ -1171,6 +1244,7 @@ function init() {
     });
   });
   ['ac', 'adblue_enabled'].forEach(id => $(id).addEventListener('change', render));
+  document.querySelectorAll('input[name="fuel_type"], input[name="city_pct"]').forEach(el => el.addEventListener('change', render));
   $('note').addEventListener('input', () => LS.setJson(INPUTS_KEY, snapshot()));
 
   $('reset-btn').addEventListener('click', () => {
@@ -1178,6 +1252,7 @@ function init() {
     $('note').value = '';
     $('ac').checked = true;
     $('adblue_enabled').checked = true;
+    setRadio('city_pct', 10);
     currentVehicle = '';
     render();
     toast('Поля очищено');
